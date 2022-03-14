@@ -12,4 +12,4 @@
 "tot_amt":"double",
 }
 
-I want to update tot_amt=quantity* price during the runtime. Can I do this using mongotemplate? Or any suggestions?
+I want to update tot_amt=quantity* price during the runtime. Can I do this using mongotemplate? Or any suggestions??
