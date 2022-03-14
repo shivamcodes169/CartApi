@@ -1,5 +1,6 @@
 package com.example.demo.servicee;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,18 @@ public class CartService {
 	{
 		return cartRepo.findAll();
 		
+	}
+
+	public Optional<Cart> getDetailsByName(String name) {
+		
+		
+		//Optional<Cart> savedCartData= Optional.ofNullable(cartRepo.findByName(name).orElseThrow(()-> new RuntimeException(String.format("Not found %s",name))));
+		
+		Optional<Cart> savedCartData=Optional.of(cartRepo.findByName(name).orElseThrow(()->new RuntimeException(String.format("Not found %s",name))));
+    	return savedCartData;
+    	
+		
+		 
 	}
 
 }

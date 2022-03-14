@@ -16,7 +16,8 @@ public class Cart {
 	
 	@Indexed(unique=true)
 	public String uname;
-	public double tot_amt;
+	
 	public List<Product>products;
+	public double tot_amt;
 
 }
