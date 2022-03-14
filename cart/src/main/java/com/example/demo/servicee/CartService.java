@@ -1,22 +1,33 @@
 package com.example.demo.servicee;
 import java.util.List;
+
 import java.util.Optional;
 
+import javax.management.Query;
+
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.modell.Cart;
+import com.example.demo.modell.Product;
 import com.example.demo.repos.CartRepository;
+import com.mongodb.BasicDBObject;
+
 
 @Service
 public class CartService {
 	
-	@Autowired
+	   @Autowired
 	   public CartRepository cartRepo;
-	
+	   
+	   public MongoTemplate mt;
+	   
 	
 	public void saveUser(Cart cart) {
-        
+		
        cartRepo.save(cart);        
     }
      
@@ -36,6 +47,18 @@ public class CartService {
     	
 		
 		 
+	}
+	//function to delete all cart info of a user
+	public String deleteByName(String name)
+	{	
+		
+		
+			
+		 cartRepo.deleteProduct(name);
+		
+		 return "Product deleted successfull!";
+		
+		
 	}
 
 }
