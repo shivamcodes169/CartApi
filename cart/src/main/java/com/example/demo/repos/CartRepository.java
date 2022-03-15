@@ -19,7 +19,12 @@ public interface CartRepository extends MongoRepository<Cart,String>{
 	
 	//function to delete all cart info of a user
 	@DeleteQuery(value="{ 'uname' : ?0}")
-	public String deleteProduct(String name);	
+	public String deleteProduct(String name);
+	
+	
+	
+	
+	
 
 
 }

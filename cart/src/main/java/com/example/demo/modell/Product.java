@@ -1,7 +1,10 @@
 package com.example.demo.modell;
 
 import lombok.Data;
-
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 @Data
 public class Product {
 

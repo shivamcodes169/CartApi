@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +56,22 @@ public class CartController {
 		}
 		
 	}
-	
+	//function to update product quantity and cart amount
+//	@PutMapping("/{name}/{prodname}/{qty}")
+//	public String updateProduct(@PathVariable String name,@PathVariable String prodname,@PathVariable int qty)
+//	{
+//		try
+//		{
+//			cartService.updateProd(name,prodname,qty);
+//			return "Product updated";
+//		}
+//		catch(Exception e)
+//		{	
+//			System.out.print(e);
+//			return "Product not found!";
+//		}
+//	}
+//	
 	//function to delete all cart info of a user
 	@DeleteMapping("/delete/{name}")
 	public String deleteByName(@PathVariable String name)
