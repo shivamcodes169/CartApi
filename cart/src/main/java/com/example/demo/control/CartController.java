@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.modell.Cart;
+import com.example.demo.modell.Product;
 import com.example.demo.repos.CartRepository;
 import com.example.demo.servicee.CartService;
 
@@ -57,31 +58,35 @@ public class CartController {
 		
 	}
 	//function to update product quantity and cart amount
-//	@PutMapping("/{name}/{prodname}/{qty}")
-//	public String updateProduct(@PathVariable String name,@PathVariable String prodname,@PathVariable int qty)
-//	{
-//		try
-//		{
-//			cartService.updateProd(name,prodname,qty);
-//			return "Product updated";
-//		}
-//		catch(Exception e)
-//		{	
-//			System.out.print(e);
-//			return "Product not found!";
-//		}
-//	}
-//	
-	//function to delete all cart info of a user
-	@DeleteMapping("/delete/{name}")
-	public String deleteByName(@PathVariable String name)
+	@PutMapping("/{name}/{prodname}/{qty}")
+	public Optional<Cart> updateProduct(@PathVariable String name,@PathVariable String prodname,@PathVariable int qty)
 	{
-		
-		cartService.deleteByName(name);
-		return " deleted successfully! no items in your cart" ;
-		
+		try
+		{
+			Optional<Cart>c=cartService.updateProd(name,prodname,qty);
+			return c;
+		}
+		catch(Exception e)
+		{	
+			System.out.print(e);
+			return null;
+		}
 	}
 	
+	//to add a new product for given customer
+		@PutMapping("/{name}")
+		public String addProduct(@PathVariable String name,@RequestBody Product p)
+		{
+			cartService.addProductByName( name,p);
+			return "checking";
+		}
+	
+	@DeleteMapping("/{name}/{prodname}")
+	public String deleteProd(@PathVariable String name,@PathVariable String prodname)
+	{
+		cartService.deleteByName(name, prodname);
+		return prodname+" deleleted successfully";
+	}
 	
 	
 

@@ -63,38 +63,95 @@ public class CartService {
     	 
 	}
 	
-	
+
+	 public Optional<Cart> updateProd(String name, String prodname, int qty) {
+	        
+	        Optional<Cart> cart=cartRepo.findByName(name);
+	        Cart c=cart.get();
+	        List<Product>products=c.getProducts();
+	        for(Product p:products)
+	        {
+	            if (p.getProdname().equals(prodname)) {
+	                p.setQuantity(qty);
+	                break;
+	                
+	             }
+	       
+	       
+	        }
+	        
+	        c.setProducts(products);
+	        
+		        
+	        c.setTot_amt(computeTotalAmount( c)); // computeTotalAmount( c) this function definition is at end
+	        
+	        cart=Optional.of(c);
+	        cartRepo.save(cart.get());
+	        
+			return cart;
+	        
+	 }
+	 
 	//function to delete all cart info of a user
-	public String deleteByName(String name)
-	{	
-		
-		
+		public void deleteByName(String name,String  prodname)
+		{	
 			
-		 cartRepo.deleteProduct(name);
-		
-		 return "Product deleted successfull!";
-		
-		
-	}
+			Optional<Cart> cart=cartRepo.findByName(name);
+			Cart c=cart.get();
+			List<Product>products=c.getProducts();
+			for(Product p:products)
+			{
+				if (p.getProdname().equals(prodname)) {
+	                products.remove(p);
+	                break;
+	                
+	             }
+			}
+			
+			c.setProducts(products);
+			
+			
+			//set new tot_amt    
+		    c.setTot_amt(computeTotalAmount( c));
+			 
+		    cart=Optional.of(c);
+			cartRepo.save(cart.get());
+				
+			 
+			
+			
+		}
 
-//	 public void updateProd(String name, String prodname, int qty) {
-//	        
-//	        Optional<Cart> cart=cartRepo.findByName(name);
-//	        Cart c=cart.get();
-//	        List<Product>products=c.getProducts();
-//	        for(Product p:products)
-//	        {
-//	            if (p.getProdname().equals(prodname)) {
-//	                p.setQuantity(qty);
-//	                break;
-//	                
-//	            }
-//	        }
-//	        c.setProducts(products);
-//	        cart=Optional.of(c);
-//	        cartRepo.save(cart);
-//	    }
-
+		public void addProductByName(String name, Product prod) {
+			Optional<Cart> cart=cartRepo.findByName(name);
+			Cart c=cart.get();
+			List<Product>products=c.getProducts();
+			products.add(prod);
+			c.setProducts(products);
+			
+			
+		     c.setTot_amt(computeTotalAmount(c));
+			 cart=Optional.of(c);
+			cartRepo.save(cart.get());
+		}
+		
+		public double  computeTotalAmount(Cart c)
+		{
+			List<Product>products=c.getProducts();
+			List<Double>amt= new ArrayList<>();
+	        products.forEach(p -> {
+				double price=p.getPrice();
+				int quantity=p.getQuantity();
+				amt.add(price*quantity);
+			});
+	        
+			 double tot_amount = 0;
+		        for (Double i : amt)
+		        	tot_amount += i;
+		        
+		    
+		     return tot_amount;
+		}
 
 }
 
